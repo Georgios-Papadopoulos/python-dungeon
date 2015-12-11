@@ -72,8 +72,7 @@ while True:
         dungeons[z][y]= dungeons[z][y][:x]+"."+dungeons[z][y][x+1:]
     
     line = dungeons[z][y][:x]+player+dungeons[z][y][x+1:]
-    #os.system("clear")
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("clear")
     #print(line)
     ly = 0
     for line in dungeons[z]:
@@ -85,6 +84,13 @@ while True:
     command = input(" Breads: {}\n Money: {}\n Hitpoints: {}\n Dungeon level: {}\n>>>".format(bread,money,hitpoints,z+1))
     dx = 0
     dy = 0
+    if command == "e" or command == "eat":
+        if bread <1:
+            print("You dont have bread!")
+            input("Press Enter to continue\n")
+        else:
+            bread -= 1
+            hitpoints +=2
     if command == "a":
         dx = -1
     if command == "d":
@@ -105,7 +111,7 @@ while True:
             z -= 1
         else:
             print("Find first a stair!")
-            input("Press Enter to continue\n")
+            input("Press Enter to continue")
             continue
     if command == "quit" or command == "exit":
         break
@@ -131,7 +137,7 @@ while True:
         else:
             print("You loose!")
             hitpoints -= random.randint(1,3)
-        input("Press Enter\n")
+        input("Press Enter")
         
     else:
         x +=dx 
