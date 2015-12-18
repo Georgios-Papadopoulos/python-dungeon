@@ -171,7 +171,3 @@ while True:
         x +=dx 
         y += dy
 print("Game Over!")
-    
-
-
-
