@@ -5,19 +5,19 @@ level1= """
 ##############################################################
 #..........................S>S...............................#
 #........B..................S......######.####.....S.......###
-###................B............B..##$$..S.$##...........#####
+###...........!....B............B..##$$..S.$##...........#####
 ########.................bbb.......##$$$$.$$####.......#######
 ##############################################################
 """
 
 level2="""
 ##############################################################
-#########..............<.....................#################
-##############..............######................############
-#####.....................#########...............############
-#########...................####....................#####>####
-######...........................................#.######.####
-######.........................................###........####
+#########.............E<E................SB$$#################
+##############S........E....######...........SB$$$############
+#####bbbb$$BbbB...........#########............BBS############
+#########BSBSS..............####...#######E###......#####>####
+######.!...........B...............##$$$$.E$##...#S######.####
+######.............................##$$$$$$$##.###S.$$$$$$####
 ##############################################################
 """
 
@@ -31,11 +31,18 @@ level3="""
 ##########......######################.........###############
 #######..........#######################.............#########
 #####...............###########.............................##
-##########................................................####
+##########..........................................F.....####
 ##############################################################
 """
 dungeons = [level1.split(), level2.split(), level3.split()]
 legend = """
+------- Controls: ---------
+W = up
+S = down
+A = left
+D = right
+
+------- Legend: ---------
 @ = Player
 B = Bat
 S = Skorpion
@@ -44,6 +51,7 @@ F = Final boss
 # = Wall
 b = Bread
 $ = Money
+! = Trader
 """
             
 z= 0
@@ -70,9 +78,9 @@ while True:
     if tile == "$":
         money += 1
         dungeons[z][y]= dungeons[z][y][:x]+"."+dungeons[z][y][x+1:]
-    
     line = dungeons[z][y][:x]+player+dungeons[z][y][x+1:]
-    os.system("clear")
+    #os.system("clear")
+    os.system('cls' if os.name=='nt' else 'clear')
     #print(line)
     ly = 0
     for line in dungeons[z]:
@@ -116,12 +124,32 @@ while True:
     if command == "quit" or command == "exit":
         break
     if command =="?" or command == "help":
+        os.system('cls' if os.name=='nt' else 'clear')
         print(legend)
-        input("Press Enter to continue")
+        input("Press Enter to continue\n")
     testtile = dungeons[z][y+dy][x+dx]
     if testtile == "#":
         dx = 0
         dy = 0
+    if testtile == "!":
+        dx = 0
+        dy = 0
+        print("Welcome at the jolly bakery")
+        print("how many money do you want to trade into bread?")
+        amount = input("how much?\n")
+        try:
+            amount = int(amount)
+        except:
+            print("Idiot!")
+            amount = -1 
+        if amount > 0 and amount > money:
+            print("you are far to poor! earn money first, idiot!")
+        elif amount > 0:
+            money -= amount
+            bread += amount
+            print("it's a pleasure to make business with you, Sir!")
+        input("Press Enter to continue\n")
+            
     if testtile in "BSEF":
         print("A batlle!")
         foeroll = random.randint(1, foes[testtile][1])
